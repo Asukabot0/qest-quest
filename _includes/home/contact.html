@@ -1,0 +1,28 @@
+{% assign home = site.data.home %}
+{% assign locale = page.lang | default: site.lang | default: 'ja' %}
+{% assign heading = home.contact.heading %}
+{% assign intro = home.contact.intro[locale] | default: home.contact.intro.ja %}
+{% assign locations = home.contact.locations[locale] | default: home.contact.locations.ja %}
+{% assign button_text = home.contact.button.text[locale] | default: home.contact.button.text.ja %}
+{% assign button_url = home.contact.button.url %}
+{% if button_url contains '://' %}
+  {% assign button_href = button_url %}
+{% else %}
+  {% assign button_href = button_url | relative_url %}
+{% endif %}
+<section class="home-contact" data-reveal>
+  <h2 class="chapter">{{ heading }}</h2>
+  {% if intro and intro != '' %}
+    <p class="home-contact__intro">{{ intro }}</p>
+  {% endif %}
+  {% if locations %}
+    <ul class="home-contact__list">
+      {% for item in locations %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <p class="home-contact__cta">
+    <a class="btn get-in-touch" href="{{ button_href }}" target="_blank" rel="noopener">{{ button_text }}</a>
+  </p>
+</section>

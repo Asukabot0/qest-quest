@@ -1,0 +1,73 @@
+{% assign home = site.data.home %}
+{% assign locale = page.lang | default: site.lang | default: 'ja' %}
+{% assign heading = home.hero_slideshow.heading[locale] | default: home.hero_slideshow.heading.ja %}
+{% assign fallback_message = home.hero_slideshow.fallback_message[locale] | default: home.hero_slideshow.fallback_message.ja %}
+{% assign slides = include.slides %}
+{% assign interval = include.interval | default: page.hero_slider_interval | default: 5000 %}
+<section class="hero-slideshow" data-reveal aria-labelledby="hero-slideshow-title">
+  <div class="hero-slideshow__ambient">
+    {% assign sd_mode = home.speculative_design.mode | default: 'compact' %}
+    <div id="sd-root" data-mode="{{ sd_mode }}"></div>
+  </div>
+  <h2 id="hero-slideshow-title" class="hero-slideshow__title">{{ heading }}</h2>
+  {% assign slides_count = 0 %}
+  {% if slides %}{% assign slides_count = slides | size %}{% endif %}
+  {% if slides_count > 0 %}
+    <div class="qest-hero" data-hero-slideshow data-interval="{{ interval }}" role="region" aria-roledescription="carousel" aria-label="{% if locale == 'en' %}Featured carousel{% else %}Contents{% endif %}">
+      <div class="qest-hero__track" data-hero-track tabindex="0">
+        {% for s in slides %}
+          {% assign alt_txt = '' %}
+          {% if locale == 'ja' and s.alt_jp and s.alt_jp != '' %}{% assign alt_txt = s.alt_jp %}{% endif %}
+          {% if locale == 'en' and s.alt_en and s.alt_en != '' %}{% assign alt_txt = s.alt_en %}{% endif %}
+          {% if alt_txt == '' and s.alt and s.alt != '' %}{% assign alt_txt = s.alt %}{% endif %}
+
+          {% assign cap_txt = '' %}
+          {% if locale == 'ja' and s.caption_jp and s.caption_jp != '' %}{% assign cap_txt = s.caption_jp %}{% endif %}
+          {% if locale == 'en' and s.caption_en and s.caption_en != '' %}{% assign cap_txt = s.caption_en %}{% endif %}
+          {% if cap_txt == '' and s.caption and s.caption != '' %}{% assign cap_txt = s.caption %}{% endif %}
+
+          {% assign cta_text = '' %}
+          {% assign cta_url = '' %}
+          {% if locale == 'ja' and s.cta_text_jp and s.cta_text_jp != '' %}{% assign cta_text = s.cta_text_jp %}{% endif %}
+          {% if locale == 'en' and s.cta_text_en and s.cta_text_en != '' %}{% assign cta_text = s.cta_text_en %}{% endif %}
+          {% if locale == 'ja' and s.cta_url_jp and s.cta_url_jp != '' %}{% assign cta_url = s.cta_url_jp %}{% endif %}
+          {% if locale == 'en' and s.cta_url_en and s.cta_url_en != '' %}{% assign cta_url = s.cta_url_en %}{% endif %}
+          {% if cta_url == '' and s.link and s.link != '' %}{% assign cta_url = s.link %}{% endif %}
+
+          <figure class="qest-hero__slide{% if forloop.first %} is-active{% endif %}" data-hero-slide data-index="{{ forloop.index0 }}">
+            {% if s.link and s.link != '' %}
+              <a href="{{ s.link | relative_url }}" tabindex="-1" class="qest-hero__slide-link">
+                <img src="{{ s.src | relative_url }}" alt="{{ alt_txt | escape }}" {% if forloop.first %}loading="eager"{% else %}loading="lazy"{% endif %} decoding="async">
+              </a>
+            {% else %}
+              <img src="{{ s.src | relative_url }}" alt="{{ alt_txt | escape }}" {% if forloop.first %}loading="eager"{% else %}loading="lazy"{% endif %} decoding="async">
+            {% endif %}
+            <div class="qest-hero__veil" aria-hidden="true"></div>
+            {% if cap_txt != '' %}
+              <figcaption class="qest-hero__caption">
+                <h3>{{ cap_txt }}</h3>
+                {% if cta_url != '' and cta_text != '' %}
+                  <div class="qest-hero__cta">
+                    <a class="btn primary" href="{{ cta_url | relative_url }}">{{ cta_text }}</a>
+                  </div>
+                {% endif %}
+              </figcaption>
+            {% endif %}
+          </figure>
+        {% endfor %}
+        <button class="qest-hero__prev" type="button" data-hero-prev aria-label="{% if locale == 'en' %}Previous slide{% else %}前のスライド{% endif %}">‹</button>
+        <button class="qest-hero__next" type="button" data-hero-next aria-label="{% if locale == 'en' %}Next slide{% else %}次のスライド{% endif %}">›</button>
+        <button class="qest-hero__pause" type="button" data-hero-pause aria-pressed="false" aria-label="{% if locale == 'en' %}Pause autoplay{% else %}自動再生を一時停止{% endif %}">❚❚</button>
+      </div>
+      <div class="qest-hero__nav" role="tablist" aria-label="{% if locale == 'en' %}Slides{% else %}スライド{% endif %}">
+        {% for s in slides %}
+          <button class="qest-hero__dot" type="button" role="tab" data-hero-dot data-index="{{ forloop.index0 }}" {% if forloop.first %}aria-current="true"{% endif %} aria-label="{% if locale == 'en' %}Slide {{ forloop.index }}{% else %}{{ forloop.index }}枚目{% endif %}"></button>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="qest-hero qest-hero--empty">
+      <p>{{ fallback_message }}</p>
+    </div>
+  {% endif %}
+</section>

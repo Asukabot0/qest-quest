@@ -1,0 +1,55 @@
+hero_intro:
+  ja:
+    lead: ""
+    cta:
+      text: ""
+      url: "/projects/"
+  en:
+    lead: "Designing and realizing the near-future IT paradigm with Quantum Internet"
+    cta:
+      text: "Let's embark on a quest →"
+      url: "/projects/"
+hero_slideshow:
+  heading:
+    ja: "Contents"
+    en: "Contents"
+  fallback_message:
+    ja: "front matter に `hero_slides` を追加するとスライドショーが表示されます。"
+    en: "Add `hero_slides` to front matter to enable the hero slideshow."
+speculative_design:
+  mode: "compact"
+news:
+  heading:
+    ja: "最新ニュース"
+    en: "Latest News"
+  view_all:
+    url: "/projects/"
+    text:
+      ja: "すべてのNEWSを見る →"
+      en: "View all news →"
+activities:
+  heading:
+    ja: "活動報告"
+    en: "Activities"
+  view_all:
+    url: "/activities/"
+    text:
+      ja: "すべての活動を見る →"
+      en: "View all activities →"
+contact:
+  heading: "Contact"
+  intro:
+    ja: "ご連絡は下記フォームからどうぞ。"
+    en: "Please contact us using the form below."
+  locations:
+    ja:
+      - "KMD：横浜市港北区日吉 4-1-1 慶應義塾大学日吉協生館"
+      - "Q/est：神奈川県川崎市幸区新川崎7-7 かわさき新産業創造センター"
+    en:
+      - "KMD: 4-1-1 Hiyoshi, Kohoku-ku, Yokohama, Kanagawa"
+      - "Q/EST: 7-7 Shinkawasaki, Saiwai-ku, Kawasaki, Kanagawa"
+  button:
+    url: "https://forms.gle/WhzwMF4iz6G1PrDf9"
+    text:
+      ja: "Contact Us"
+      en: "Contact Us"
