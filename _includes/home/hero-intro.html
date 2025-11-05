@@ -1,0 +1,17 @@
+{% assign home = site.data.home %}
+{% assign locale = page.lang | default: site.lang | default: 'ja' %}
+{% assign intro = home.hero_intro[locale] | default: home.hero_intro.ja %}
+<section class="hero-intro" data-reveal>
+  {% if intro.lead and intro.lead != '' %}
+    <p class="hero-intro__lead">{{ intro.lead }}</p>
+  {% endif %}
+  {% if intro.cta and intro.cta.text and intro.cta.text != '' and intro.cta.url and intro.cta.url != '' %}
+    {% assign cta_url = intro.cta.url %}
+    {% if cta_url contains '://' %}
+      {% assign cta_href = cta_url %}
+    {% else %}
+      {% assign cta_href = cta_url | relative_url %}
+    {% endif %}
+    <a class="btn-quest" href="{{ cta_href }}">{{ intro.cta.text }}</a>
+  {% endif %}
+</section>
